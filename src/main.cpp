@@ -8,8 +8,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+#include "robot-config.h"
 
-using namespace vex;
+//using namespace vex;
 
 // A global instance of competition
 competition Competition;
@@ -46,6 +47,7 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  
 }
 
 /*---------------------------------------------------------------------------*/
@@ -59,35 +61,168 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  // User control code here, inside the loop
-  while (1) {
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+  while (1)
+  {
+    float throttle = Controller.Axis3.value(); //get user input from joystick
 
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+    if (throttle < 5 && throttle > -5)
+    {
+      throttle = 0;
+    }
+    throttle = throttle / 1.27;
+    float turn = Controller.Axis1.value();
+    if (turn < 5 && turn > -5)
+    {
+      turn = 0;
+    }
+    turn = turn / 1.27;
+    throttle = pow(throttle, 3) / 10000;
+    turn = pow(turn, 3) / 10000;
 
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    float leftpow;
+    float rightpow;
+
+    leftpow = throttle + turn;
+    rightpow = throttle - turn;
+
+    if (leftpow == 0)
+    {
+      LeftSide.stop(brake);
+    }
+    if (rightpow == 0)
+    {
+      RightSide.stop(brake);
+    }
+
+    LeftSide.spin(fwd, (leftpow * 0.12), volt);
+    RightSide.spin(fwd, (rightpow * 0.12), volt);
+    
+    //LeftSide.spin(fwd, 255, volt);
+    //RightSide.spin(fwd, 255, volt);
+
+    /*
+    // Manual Intake control, turns the back motor
+    if(Controller.ButtonL1.pressing())
+    {
+      BackIntake.spin(fwd, 75, percent);
+    } 
+    
+    else if(Controller.ButtonL2.pressing())
+    {
+      BackIntake.spin(reverse, 75, percent);
+    }
+    else 
+    { 
+      BackIntake.stop(brake);
+    }
+    wait(20, msec);
+
+    // Intake control, turns the front motor
+      if(Controller.ButtonR1.pressing())
+    {
+      FrontIntake.spin(fwd, 75, percent);
+    } 
+     else if(Controller.ButtonR2.pressing())
+    {
+      FrontIntake.spin(reverse, 75, percent);
+    }
+    else 
+    { 
+      FrontIntake.stop(brake);
+    }
+    wait(20, msec);
+
+     // Intake control, turns the front motor
+      if(Controller.ButtonY.pressing())
+    {
+      LoneIntake.spin(fwd, 75, percent);
+    } 
+     else if(Controller.ButtonB.pressing())
+    {
+      LoneIntake.spin(reverse, 75, percent);
+    }
+    else { 
+      LoneIntake.stop(brake);
+    }
+    wait(20, msec);
+    */
+
+    //Long Goal Intake Control
+      if(Controller.ButtonR1.pressing())
+    {
+      BackIntake.spin(fwd, 75, percent);
+      FrontIntake.spin(fwd, 75, percent);
+      LoneIntake.spin(reverse, 75, percent);
+    } 
+    /*
+    else 
+    { 
+      BackIntake.stop(brake);
+      FrontIntake.stop(brake);
+      LoneIntake.stop(brake);
+    }
+    wait(20, msec);
+    */
+
+    //Middle Goal Intake Control
+     else if(Controller.ButtonR2.pressing())
+    {
+      BackIntake.spin(fwd, 75, percent);
+      FrontIntake.spin(fwd, 75, percent);
+      LoneIntake.spin(fwd, 75, percent);
+    } 
+    /*
+    else 
+    { 
+      BackIntake.stop(brake);
+      FrontIntake.stop(brake);
+      LoneIntake.stop(brake);
+    }
+    wait(20, msec);
+    */
+
+    //Basket Intake Control
+     else if(Controller.ButtonL1.pressing())
+    {
+      BackIntake.spin(reverse, 75, percent);
+      FrontIntake.spin(fwd, 75, percent);
+    } 
+    /*
+    else 
+    { 
+      BackIntake.stop(brake);
+      FrontIntake.stop(brake);
+    }
+    wait(20, msec);
+    */
+
+    //Low Goal Intake Control
+     else if(Controller.ButtonL2.pressing())
+    {
+      BackIntake.spin(reverse, 75, percent);
+      FrontIntake.spin(reverse, 75, percent);
+      LoneIntake.spin(fwd, 75, percent);
+    } 
+    else 
+    { 
+      BackIntake.stop(brake);
+      FrontIntake.stop(brake);
+      LoneIntake.stop(brake);
+    }
+    wait(20, msec);
   }
 }
 
-//
-// Main will set up the competition functions and callbacks.
-//
+
 int main() {
-  // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
+    // Set up callbacks.
+    Competition.autonomous(autonomous);
+    Competition.drivercontrol(usercontrol);
 
-  // Run the pre-autonomous function.
-  pre_auton();
-
-  // Prevent main from exiting with an infinite loop.
-  while (true) {
-    wait(100, msec);
-  }
+    // Prevent main from exiting with an infinite loop.
+    while (true) {
+        wait(100, msec);
+     }
 }
+
+
