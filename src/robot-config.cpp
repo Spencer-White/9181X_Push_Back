@@ -23,3 +23,6 @@ motor LoneIntake = motor(PORT10, ratio18_1, true);
 //Drivetrain Motor Groups
 motor_group LeftSide = motor_group(FrontLeft, MiddleLeft, BackLeft);
 motor_group RightSide = motor_group(FrontRight, MiddleRight, BackRight);
+
+//Pneumatics
+digital_out Solenoid = digital_out(Brain.ThreeWirePort.A);

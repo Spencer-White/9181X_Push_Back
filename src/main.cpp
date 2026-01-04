@@ -213,7 +213,18 @@ void usercontrol(void) {
   }
 }
 
+ Solenoid.set(false);
+ while(true) {
+        if(Controller1.ButtonB.pressing()) {
+            Solenoid.set(true);
+            }
+        else if(Controller1.ButtonY.pressing()) {
+            Solenoid.set(false);
+        }
+              wait(20, msec); 
+    }
 
+/*
 int main() {
     // Set up callbacks.
     Competition.autonomous(autonomous);
@@ -224,5 +235,4 @@ int main() {
         wait(100, msec);
      }
 }
-
-
+*/

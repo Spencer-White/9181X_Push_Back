@@ -15,4 +15,6 @@ using namespace vex;
   extern motor_group LeftSide;
   extern motor_group RightSide;
 
+  extern digital_out Solenoid;
+
   void vexcodeInit(void);
