@@ -31,6 +31,7 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  Solenoid.set(false);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -44,10 +45,11 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
-  
+LeftSide.spin(fwd, 10, pct);
+RightSide.spin(fwd, 10, pct);
+wait(1, sec);
+LeftSide.stop(brake);
+RightSide.stop(brake);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -132,16 +134,17 @@ void usercontrol(void) {
     }
     wait(20, msec);
 
-     // Intake control, turns the front motor
-      if(Controller.ButtonY.pressing())
+    // Intake control, turns the lone motor
+      if(Controller.ButtonUp.pressing())
     {
       LoneIntake.spin(fwd, 75, percent);
     } 
-     else if(Controller.ButtonB.pressing())
+     else if(Controller.ButtonDown.pressing())
     {
       LoneIntake.spin(reverse, 75, percent);
     }
-    else { 
+    else 
+    { 
       LoneIntake.stop(brake);
     }
     wait(20, msec);
@@ -154,16 +157,7 @@ void usercontrol(void) {
       FrontIntake.spin(fwd, 75, percent);
       LoneIntake.spin(reverse, 75, percent);
     } 
-    /*
-    else 
-    { 
-      BackIntake.stop(brake);
-      FrontIntake.stop(brake);
-      LoneIntake.stop(brake);
-    }
-    wait(20, msec);
-    */
-
+   
     //Middle Goal Intake Control
      else if(Controller.ButtonR2.pressing())
     {
@@ -171,15 +165,6 @@ void usercontrol(void) {
       FrontIntake.spin(fwd, 75, percent);
       LoneIntake.spin(fwd, 75, percent);
     } 
-    /*
-    else 
-    { 
-      BackIntake.stop(brake);
-      FrontIntake.stop(brake);
-      LoneIntake.stop(brake);
-    }
-    wait(20, msec);
-    */
 
     //Basket Intake Control
      else if(Controller.ButtonL1.pressing())
@@ -187,15 +172,7 @@ void usercontrol(void) {
       BackIntake.spin(reverse, 75, percent);
       FrontIntake.spin(fwd, 75, percent);
     } 
-    /*
-    else 
-    { 
-      BackIntake.stop(brake);
-      FrontIntake.stop(brake);
-    }
-    wait(20, msec);
-    */
-
+    
     //Low Goal Intake Control
      else if(Controller.ButtonL2.pressing())
     {
@@ -210,21 +187,17 @@ void usercontrol(void) {
       LoneIntake.stop(brake);
     }
     wait(20, msec);
+
+    //Pneumatic Control
+    if(Controller.ButtonB.pressing()) {
+        Solenoid.set(true);
+    }
+    else if(Controller.ButtonY.pressing()) {
+        Solenoid.set(false);
+    }
   }
 }
 
- Solenoid.set(false);
- while(true) {
-        if(Controller1.ButtonB.pressing()) {
-            Solenoid.set(true);
-            }
-        else if(Controller1.ButtonY.pressing()) {
-            Solenoid.set(false);
-        }
-              wait(20, msec); 
-    }
-
-/*
 int main() {
     // Set up callbacks.
     Competition.autonomous(autonomous);
@@ -235,4 +208,3 @@ int main() {
         wait(100, msec);
      }
 }
-*/
