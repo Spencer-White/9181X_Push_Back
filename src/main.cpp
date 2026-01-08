@@ -45,12 +45,15 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-LeftSide.spin(fwd, 10, pct);
-RightSide.spin(fwd, 10, pct);
+LeftSide.spin(fwd, 100, pct);
+RightSide.spin(fwd, 100, pct);
 wait(1, sec);
 LeftSide.stop(brake);
 RightSide.stop(brake);
 }
+
+//No movement = 16 3/4"
+//Move forward (100% for 1 second) = Hits centre goal, ~63"
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
