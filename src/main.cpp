@@ -44,16 +44,39 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+/*
+void getPositon() {
+
+  while() {
+  }
+  
+  LeftSide.getPosition();
+  RightSide.getPosition();
+*/
+
+}
+
 void autonomous(void) {
+//Drive forward
 LeftSide.spin(fwd, 100, pct);
 RightSide.spin(fwd, 100, pct);
-wait(1, sec);
+wait(0.5, sec);
+LeftSide.stop(brake);
+RightSide.stop(brake);
+
+//No movement = 16 3/4"
+//Move forward (100% for 1 second) = Hits centre goal, ~63"
+//Move forward (100% for 0.5 seconds) = 
+
+//Turn to the right
+LeftSide.spin(fwd, 100, percent);
+RightSide.spin(reverse, 100, percent);
+wait(0.50, sec);
 LeftSide.stop(brake);
 RightSide.stop(brake);
 }
 
-//No movement = 16 3/4"
-//Move forward (100% for 1 second) = Hits centre goal, ~63"
+
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -211,3 +234,39 @@ int main() {
         wait(100, msec);
      }
 }
+
+//Inertial Sensor Setup
+
+//Configuration
+double wheelSize = 3.25; //Wheel diameter in inches
+double wheelCircumference = wheelSize * std::numbers::pi; //Calculate wheel circumference
+
+double offset = 0; //Distance from center of robot to tracking wheel in inches
+
+double x_pos = 0; 
+double y_pos = 0; 
+double theta = 0;
+
+double turn_to_radians(double turn_degrees) {
+  return turn_degrees * (std::numbers::pi / 180.0);
+}
+double radians_to_turn(double radians) {
+  return radians * (180.0 / std::numbers::pi);
+}
+
+void Setposition(double x, double y, double degrees) {
+  x_pos = x;
+  y_pos = y;
+  theta = turn_to_radians(degrees);
+}
+
+double wrapAngle(double angleDeg) {
+  if (angleDeg > 180) {
+    return angleDeg - 360;
+  }
+  return angleDeg;
+}
+
+double previous_inertial = 0;
+double previous_tracking = 0;
+

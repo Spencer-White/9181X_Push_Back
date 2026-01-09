@@ -17,4 +17,6 @@ using namespace vex;
 
   extern digital_out Solenoid;
 
+  extern inertial InertialSensor;
+
   void vexcodeInit(void);

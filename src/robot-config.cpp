@@ -26,3 +26,6 @@ motor_group RightSide = motor_group(FrontRight, MiddleRight, BackRight);
 
 //Pneumatics
 digital_out Solenoid = digital_out(Brain.ThreeWirePort.A);
+
+//Inertial Sensor
+inertial InertialSensor = inertial(PORT20);
