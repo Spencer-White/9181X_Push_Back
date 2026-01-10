@@ -270,3 +270,71 @@ double wrapAngle(double angleDeg) {
 double previous_inertial = 0;
 double previous_tracking = 0;
 
+//Gathers current values
+double heading_degrees = wrapAngle(angleDeg:imu.getheading());
+double tracking_degrees = verticalEnc.getposition();
+
+//Change in heading
+double delta_heading = heading_degrees - previous_inertial;
+double delta_tracking = tracking_degrees - previous_tracking;
+
+//Storing new tracking value for repeat
+previous tracking = tracking_degrees;
+previous_inertial = heading_degrees;
+
+//Convert to linear distance
+double delta_distance = (delta_tracking/360) * wheelCircumference;
+
+//Update position
+x_pos += true_distance * std::cos(turn_to_radians(degrees:heading_degrees));
+y_pos += true_distance * std::sin(turn_to_radians(degrees:heading_degrees));
+theta = turn_to_radians(degrees:heading_degrees);
+
+//Print position on the brain screen
+pros::lcd::print(line:2, fmt:"X_Position: %.2f inches", x_pos);
+pros::lcd::print(line:3, fmt:"Y_Position: %.2f inches", y_pos);
+pros::lcd::print(line:4, fmt:"Heading: %.2f degrees", radians_to_turn(radians:theta));
+
+void resetodometry() {
+
+  //Calibrate the IMU (only id not already calibrated)
+  imu.reset();
+pros::delay(milliseconds:200); //Minimal time to begin calibration
+
+//Wait until the IMU finishes calibrating (can take 1-2 seconds)
+while (imu.is_calibrating()) {
+  pros::delay(milliseconds:10);
+}
+//Zero the rotation sensor (tracking wheel)
+verticalEnc.reset_position();
+
+//Reset global odometry positions
+x_pos = 0.0;
+y_pos = 0.0;
+theta = turn_to_radians(degrees:0.0);
+
+//Store the inertial sensor readings for next update
+previous_inertial = wrapAngle(angleDeg:imu.get_heading()); //IMU heading
+previous_tracking = verticalEnc.get_position(); //Rotation sensor degrees
+}
+
+void resetOdometryAuto () {
+
+  //Only reset tracking wheel here
+  vertical_Enc.reset_position();
+
+  //Reset global pose
+  x_pos = 0.0;
+  y_pos = 0.0;
+
+  //Set previous sensor logs
+  previous_inertial = wrapAngle(angleDeg:imu.get_heading());
+  previous_tracking = verticalEnc.get_position();
+}
+
+void odom_task_fn(void*) {
+  while (true) {
+    updatePos();
+    pros::delay(milliseconds:10); //Time between position updates
+  }
+}
