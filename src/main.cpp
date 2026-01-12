@@ -338,3 +338,9 @@ void odom_task_fn(void*) {
     pros::delay(milliseconds:10); //Time between position updates
   }
 }
+
+void initialize() {
+  pros::lcd::initialize();
+  resetOdometry();
+  pros::Task odom_task(function:odom_task_fn, parameters(void*)"ODOM", prio: TASK_PRIORITY_DEFAULT, stack_depth: TASK_STACK_DEPTH_DEFAULT, name:"Odom Task");
+}
