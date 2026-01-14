@@ -9,6 +9,7 @@
 
 #include "vex.h"
 #include "robot-config.h"
+#include <cmath>
 
 //using namespace vex;
 
@@ -52,9 +53,8 @@ void getPositon() {
   
   LeftSide.getPosition();
   RightSide.getPosition();
-*/
-
 }
+  */
 
 void autonomous(void) {
 //Drive forward
@@ -239,7 +239,7 @@ int main() {
 
 //Configuration
 double wheelSize = 3.25; //Wheel diameter in inches
-double wheelCircumference = wheelSize * std::numbers::pi; //Calculate wheel circumference
+double wheelCircumference = wheelSize * M_PI; //Calculate wheel circumference
 
 double offset = 0; //Distance from center of robot to tracking wheel in inches
 
@@ -248,10 +248,10 @@ double y_pos = 0;
 double theta = 0;
 
 double turn_to_radians(double turn_degrees) {
-  return turn_degrees * (std::numbers::pi / 180.0);
+  return turn_degrees * (M_PI / 180.0); 
 }
 double radians_to_turn(double radians) {
-  return radians * (180.0 / std::numbers::pi);
+  return radians * (180.0 / M_PI);
 }
 
 void Setposition(double x, double y, double degrees) {
@@ -271,7 +271,7 @@ double previous_inertial = 0;
 double previous_tracking = 0;
 
 //Gathers current values
-double heading_degrees = wrapAngle(angleDeg:imu.getheading());
+double heading_degrees = wrapAngle(imu.getheading());
 double tracking_degrees = verticalEnc.getposition();
 
 //Change in heading
@@ -279,31 +279,31 @@ double delta_heading = heading_degrees - previous_inertial;
 double delta_tracking = tracking_degrees - previous_tracking;
 
 //Storing new tracking value for repeat
-previous tracking = tracking_degrees;
+previous_tracking = tracking_degrees;
 previous_inertial = heading_degrees;
 
 //Convert to linear distance
 double delta_distance = (delta_tracking/360) * wheelCircumference;
 
 //Update position
-x_pos += true_distance * std::cos(turn_to_radians(degrees:heading_degrees));
-y_pos += true_distance * std::sin(turn_to_radians(degrees:heading_degrees));
-theta = turn_to_radians(degrees:heading_degrees);
+x_pos += true_distance * std::cos(turn_to_radians(heading_degrees));
+y_pos += true_distance * std::sin(turn_to_radians(heading_degrees));
+theta = turn_to_radians(heading_degrees);
 
 //Print position on the brain screen
 pros::lcd::print(line:2, fmt:"X_Position: %.2f inches", x_pos);
 pros::lcd::print(line:3, fmt:"Y_Position: %.2f inches", y_pos);
-pros::lcd::print(line:4, fmt:"Heading: %.2f degrees", radians_to_turn(radians:theta));
+pros::lcd::print(line:4, fmt:"Heading: %.2f degrees", radians_to_turn(theta));
 
 void resetodometry() {
 
   //Calibrate the IMU (only id not already calibrated)
   imu.reset();
-pros::delay(milliseconds:200); //Minimal time to begin calibration
+pros::delay(200); //Minimal time to begin calibration
 
 //Wait until the IMU finishes calibrating (can take 1-2 seconds)
 while (imu.is_calibrating()) {
-  pros::delay(milliseconds:10);
+  pros::delay(10);
 }
 //Zero the rotation sensor (tracking wheel)
 verticalEnc.reset_position();
@@ -314,7 +314,7 @@ y_pos = 0.0;
 theta = turn_to_radians(degrees:0.0);
 
 //Store the inertial sensor readings for next update
-previous_inertial = wrapAngle(angleDeg:imu.get_heading()); //IMU heading
+previous_inertial = wrapAngle(imu.get_heading()); //IMU heading
 previous_tracking = verticalEnc.get_position(); //Rotation sensor degrees
 }
 
@@ -328,7 +328,7 @@ void resetOdometryAuto () {
   y_pos = 0.0;
 
   //Set previous sensor logs
-  previous_inertial = wrapAngle(angleDeg:imu.get_heading());
+  previous_inertial = wrapAngle(imu.get_heading());
   previous_tracking = verticalEnc.get_position();
 }
 
@@ -342,5 +342,5 @@ void odom_task_fn(void*) {
 void initialize() {
   pros::lcd::initialize();
   resetOdometry();
-  pros::Task odom_task(function:odom_task_fn, parameters(void*)"ODOM", prio: TASK_PRIORITY_DEFAULT, stack_depth: TASK_STACK_DEPTH_DEFAULT, name:"Odom Task");
+  pros::Task odom_task(odom_task_fn, parameters(void*)"ODOM", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Odom Task");
 }
