@@ -63,16 +63,25 @@ void getPositon() {
 void turn(double degrees, bool clockwise){
  
   // RESET THE INERTIAL SENSOR TO ZERO
+  imu.calibrate();
+  wait(2, sec); // give time to reset
   // NEXT Get the current inertial value in degrees
-
+  double value = imu.angle();
   // THEN START TURNING. ( DON'T SPIN AT 100% )
+  if (clockwise) {
+    LeftSide.spin(fwd, 50, pct);
+    RightSide.spin(reverse, 50, pct);
+  } else {
+    LeftSide.spin(reverse, 50, pct);
+    RightSide.spin(fwd, 50, pct);
+  }
   // NOW GO INTO A LOOP.
-  
    // check the value of the inertial PLUS or MINUS the starting value againsted the target amount
    // BREAK LOOP when the inertial value reaches the target value
    // IF NOT, GET A NEW VALUE READING FROM THE SENSOR (UPDATE THE VALUE)
   // stop turning.
-
+LeftSide.stop(brake);
+RightSide.stop(brake);
 }
 
 void autonomous(void) {
