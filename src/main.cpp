@@ -18,6 +18,10 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
+double previous_inertial = 0;
+double previous_tracking = 0;
+
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -56,24 +60,39 @@ void getPositon() {
 }
   */
 
+void turn(double degrees, bool clockwise){
+ 
+  // RESET THE INERTIAL SENSOR TO ZERO
+  // NEXT Get the current inertial value in degrees
+
+  // THEN START TURNING. ( DON'T SPIN AT 100% )
+  // NOW GO INTO A LOOP.
+  
+   // check the value of the inertial PLUS or MINUS the starting value againsted the target amount
+   // BREAK LOOP when the inertial value reaches the target value
+   // IF NOT, GET A NEW VALUE READING FROM THE SENSOR (UPDATE THE VALUE)
+  // stop turning.
+
+}
+
 void autonomous(void) {
-//Drive forward
-LeftSide.spin(fwd, 100, pct);
-RightSide.spin(fwd, 100, pct);
-wait(0.5, sec);
-LeftSide.stop(brake);
-RightSide.stop(brake);
+  //Drive forward
+  LeftSide.spin(fwd, 100, pct);
+  RightSide.spin(fwd, 100, pct);
+  wait(0.5, sec);
+  LeftSide.stop(brake);
+  RightSide.stop(brake);
 
-//No movement = 16 3/4"
-//Move forward (100% for 1 second) = Hits centre goal, ~63"
-//Move forward (100% for 0.5 seconds) = 
+  //No movement = 16 3/4"
+  //Move forward (100% for 1 second) = Hits centre goal, ~63"
+  //Move forward (100% for 0.5 seconds) = 
 
-//Turn to the right
-LeftSide.spin(fwd, 100, percent);
-RightSide.spin(reverse, 100, percent);
-wait(0.50, sec);
-LeftSide.stop(brake);
-RightSide.stop(brake);
+  //Turn to the right
+  LeftSide.spin(fwd, 100, percent);
+  RightSide.spin(reverse, 100, percent);
+  wait(0.50, sec);
+  LeftSide.stop(brake);
+  RightSide.stop(brake);
 }
 
 
@@ -177,7 +196,7 @@ void usercontrol(void) {
     */
 
     //Long Goal Intake Control
-      if(Controller.ButtonR1.pressing())
+    if(Controller.ButtonR1.pressing())
     {
       BackIntake.spin(fwd, 75, percent);
       FrontIntake.spin(fwd, 75, percent);
@@ -236,7 +255,7 @@ int main() {
 }
 
 //Inertial Sensor Setup
-
+/*
 //Configuration
 double wheelSize = 3.25; //Wheel diameter in inches
 double wheelCircumference = wheelSize * M_PI; //Calculate wheel circumference
@@ -267,55 +286,59 @@ double wrapAngle(double angleDeg) {
   return angleDeg;
 }
 
-double previous_inertial = 0;
-double previous_tracking = 0;
+void updatePos() {
 
-//Gathers current values
-double heading_degrees = wrapAngle(imu.getheading());
-double tracking_degrees = verticalEnc.getposition();
 
-//Change in heading
-double delta_heading = heading_degrees - previous_inertial;
-double delta_tracking = tracking_degrees - previous_tracking;
+  //Gathers current values
+  double heading_degrees = wrapAngle(imu.getheading());
+  double tracking_degrees = LeftSide.getposition(); + RightSide.getposition() / 2.0;
 
-//Storing new tracking value for repeat
-previous_tracking = tracking_degrees;
-previous_inertial = heading_degrees;
+  //Change in heading
+  double delta_heading = heading_degrees - previous_inertial;
+  double delta_tracking = tracking_degrees - previous_tracking;
 
-//Convert to linear distance
-double delta_distance = (delta_tracking/360) * wheelCircumference;
+  //Storing new tracking value for repeat
+  previous_tracking = tracking_degrees;
+  previous_inertial = heading_degrees;
 
-//Update position
-x_pos += true_distance * std::cos(turn_to_radians(heading_degrees));
-y_pos += true_distance * std::sin(turn_to_radians(heading_degrees));
-theta = turn_to_radians(heading_degrees);
+  //Convert to linear distance
+  double delta_distance = (delta_tracking/360) * wheelCircumference;
 
-//Print position on the brain screen
-pros::lcd::print(line:2, fmt:"X_Position: %.2f inches", x_pos);
-pros::lcd::print(line:3, fmt:"Y_Position: %.2f inches", y_pos);
-pros::lcd::print(line:4, fmt:"Heading: %.2f degrees", radians_to_turn(theta));
+  //Update position
+  x_pos += delta_distance * std::cos(turn_to_radians(heading_degrees));
+  y_pos += delta_distance * std::sin(turn_to_radians(heading_degrees));
+  theta = turn_to_radians(heading_degrees);
 
-void resetodometry() {
+  //Print position on the brain screen
+  print(2, "X_Position: %.2f inches", x_pos);
+  print(3, "Y_Position: %.2f inches", y_pos);
+  print(4, "Heading: %.2f degrees", radians_to_turn(theta));
+}
+
+
+
+void resetOdometry() {
 
   //Calibrate the IMU (only id not already calibrated)
   imu.reset();
-pros::delay(200); //Minimal time to begin calibration
+  wait(200, msec); //Minimal time to begin calibration
 
-//Wait until the IMU finishes calibrating (can take 1-2 seconds)
-while (imu.is_calibrating()) {
-  pros::delay(10);
-}
-//Zero the rotation sensor (tracking wheel)
-verticalEnc.reset_position();
+  //Wait until the IMU finishes calibrating (can take 1-2 seconds)
+  while (imu.is_calibrating()) {
+    wait(10, msec);
+  }
+  //Zero the rotation sensor (tracking wheel)
+  verticalEnc.reset_position();
 
-//Reset global odometry positions
-x_pos = 0.0;
-y_pos = 0.0;
-theta = turn_to_radians(degrees:0.0);
+  //Reset global odometry positions
+  x_pos = 0.0;
+  y_pos = 0.0;
+  theta = turn_to_radians(degrees:0.0);
 
-//Store the inertial sensor readings for next update
-previous_inertial = wrapAngle(imu.get_heading()); //IMU heading
-previous_tracking = verticalEnc.get_position(); //Rotation sensor degrees
+  //Store the inertial sensor readings for next update
+  previous_inertial = wrapAngle(imu.get_heading()); //IMU heading
+  previous_tracking = verticalEnc.get_position(); //Rotation sensor degrees
+
 }
 
 void resetOdometryAuto () {
@@ -335,12 +358,13 @@ void resetOdometryAuto () {
 void odom_task_fn(void*) {
   while (true) {
     updatePos();
-    pros::delay(milliseconds:10); //Time between position updates
+    wait(10, msec); //Time between position updates
   }
 }
+*/
 
 void initialize() {
-  pros::lcd::initialize();
-  resetOdometry();
-  pros::Task odom_task(odom_task_fn, parameters(void*)"ODOM", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Odom Task");
+ // pros::lcd::initialize();
+  imu.isCalibrating();
+  //Task odom_task(odom_task_fn, parameters(void*)"ODOM", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Odom Task");
 }
