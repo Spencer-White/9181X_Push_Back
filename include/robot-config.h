@@ -15,8 +15,10 @@ using namespace vex;
   extern motor_group LeftSide;
   extern motor_group RightSide;
 
-  extern digital_out Solenoid;
+  extern digital_out MatchLoader;
+  extern digital_out Descore;
 
   extern inertial imu;
+  extern inertial imu2;
 
   void vexcodeInit(void);

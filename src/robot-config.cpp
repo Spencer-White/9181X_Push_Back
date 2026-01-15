@@ -25,7 +25,9 @@ motor_group LeftSide = motor_group(FrontLeft, MiddleLeft, BackLeft);
 motor_group RightSide = motor_group(FrontRight, MiddleRight, BackRight);
 
 //Pneumatics
-digital_out Solenoid = digital_out(Brain.ThreeWirePort.A);
+digital_out MatchLoader = digital_out(Brain.ThreeWirePort.A);
+digital_out Descore = digital_out(Brain.ThreeWirePort.H);
 
 //Inertial Sensor
 inertial imu = inertial(PORT20);
+inertial imu2 = inertial(PORT19);

@@ -36,7 +36,8 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
-  Solenoid.set(false);
+  MatchLoader.set(false);
+  Descore.set(false);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -58,50 +59,93 @@ void getPositon() {
   LeftSide.getPosition();
   RightSide.getPosition();
 }
-  */
+*/
 
-void turn(double degrees, bool clockwise){
+double wrapAngle(double angleDeg) {
+  if (angleDeg > 180) {
+    return angleDeg - 360;
+  }
+  return angleDeg;
+}
+
+void turn(double deg, bool clockwise){
  
   // RESET THE INERTIAL SENSOR TO ZERO
-  imu.calibrate();
-  wait(2, sec); // give time to reset
+  imu.setHeading(0, degrees);
+
+  //wait(2, sec); // give time to reset
   // NEXT Get the current inertial value in degrees
-  double value = imu.angle();
+  double value = wrapAngle(imu.heading());
   // THEN START TURNING. ( DON'T SPIN AT 100% )
+  /*
   if (clockwise) {
-    LeftSide.spin(fwd, 50, pct);
-    RightSide.spin(reverse, 50, pct);
+    LeftSide.spin(fwd, 8, pct);
+    RightSide.spin(reverse, 8, pct); // TODO: could add a 3rd parameter to allow speed control
   } else {
-    LeftSide.spin(reverse, 50, pct);
-    RightSide.spin(fwd, 50, pct);
+    LeftSide.spin(reverse, 8, pct);
+    RightSide.spin(fwd, 8, pct);
   }
+  */
   // NOW GO INTO A LOOP.
-   // check the value of the inertial PLUS or MINUS the starting value againsted the target amount
-   // BREAK LOOP when the inertial value reaches the target value
-   // IF NOT, GET A NEW VALUE READING FROM THE SENSOR (UPDATE THE VALUE)
-  // stop turning.
-LeftSide.stop(brake);
-RightSide.stop(brake);
+  LeftSide.setVelocity(8, pct);
+  RightSide.setVelocity(8, pct);
+
+  while (true) {
+
+    if (clockwise) {
+      LeftSide.spin(fwd);
+      RightSide.spin(reverse);
+       // check the value of the inertial againsted the target degrees
+      if (value >= deg) {// BREAK LOOP when the inertial value reaches the target value
+        break;
+      }
+    } else {
+      LeftSide.spin(reverse);
+      RightSide.spin(fwd);
+      if (value <= -deg) {// BREAK LOOP when the inertial value reaches the target value
+        break;
+      }
+    }
+    value = wrapAngle(imu.heading()); //update value
+    wait(10, msec); // small delay to prevent wasted resources
+
+    // DEBUG:
+    Brain.Screen.clearLine();
+    Brain.Screen.print("Inertial: %.2f", value);
+   }
+
+   LeftSide.stop();
+   RightSide.stop();
+  
 }
 
 void autonomous(void) {
+  imu.calibrate(2);
+  turn(90, true); // Turn 90 degrees clockwise
+  wait(1, sec);
+  turn(90, false); // Turn 90 degrees counter-clockwise
   //Drive forward
+
+  /*
   LeftSide.spin(fwd, 100, pct);
   RightSide.spin(fwd, 100, pct);
   wait(0.5, sec);
   LeftSide.stop(brake);
   RightSide.stop(brake);
+  */
 
   //No movement = 16 3/4"
   //Move forward (100% for 1 second) = Hits centre goal, ~63"
   //Move forward (100% for 0.5 seconds) = 
 
   //Turn to the right
+  /*
   LeftSide.spin(fwd, 100, percent);
   RightSide.spin(reverse, 100, percent);
   wait(0.50, sec);
   LeftSide.stop(brake);
   RightSide.stop(brake);
+  */
 }
 
 
@@ -242,12 +286,20 @@ void usercontrol(void) {
     }
     wait(20, msec);
 
-    //Pneumatic Control
+    //Match Loader Pneumatic Control
     if(Controller.ButtonB.pressing()) {
-        Solenoid.set(true);
+        MatchLoader.set(true);
     }
     else if(Controller.ButtonY.pressing()) {
-        Solenoid.set(false);
+        MatchLoader.set(false);
+    }
+
+    //Descore Pneumatic Control
+     if(Controller.ButtonDown.pressing()) {
+        Descore.set(true);
+    }
+    else if(Controller.ButtonRight.pressing()) {
+        Descore.set(false);
     }
   }
 }
@@ -288,12 +340,7 @@ void Setposition(double x, double y, double degrees) {
   theta = turn_to_radians(degrees);
 }
 
-double wrapAngle(double angleDeg) {
-  if (angleDeg > 180) {
-    return angleDeg - 360;
-  }
-  return angleDeg;
-}
+
 
 void updatePos() {
 
@@ -374,6 +421,6 @@ void odom_task_fn(void*) {
 
 void initialize() {
  // pros::lcd::initialize();
-  imu.isCalibrating();
+  //imu.isCalibrating();
   //Task odom_task(odom_task_fn, parameters(void*)"ODOM", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Odom Task");
 }
