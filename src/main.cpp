@@ -77,8 +77,8 @@ void turn(double deg, bool clockwise){
   double value = wrapAngle(imu.rotation(vex::rotationUnits::deg));
   
   // NOW GO INTO A LOOP.
-  LeftSide.setVelocity(75, pct);
-  RightSide.setVelocity(75, pct);
+  LeftSide.setVelocity(35, pct);
+  RightSide.setVelocity(35, pct);
 
 
   while (true) {
@@ -136,19 +136,21 @@ void autonomous(void) {
   wait(2, sec); // give time to calibrate
 
   
-  drive_forward(24, 100, 1); // Move forward 24 inches at 50% speed
-  wait(1, sec);
-  turn(90, false);
-  drive_forward(12, 100, 1);
-  turn(90, true);
-  drive_forward(6, 100, 1);
+  drive_forward(20, 50, 1); // Move forward 24 inches at 50% speed
+  //wait(1, sec);
+  turn(70, false);
+  drive_forward(32, 50, 1);
+  turn(70, true);
+  drive_forward(8, 50, 1);
 
-  turn(90, true); // Turn 90 degrees clockwise
-  wait(1, sec); // give time to calibrate
-  turn(90, false); // Turn 90 degrees counterclockwise
+  /*
+  turn(90, true);  Turn 90 degrees clockwise
+  wait(1, sec);  give time to calibrate
+  turn(90, false);  Turn 90 degrees counterclockwise
   //wait(1, sec);
   //turn(90, false); // Turn 90 degrees counter-clockwise
   //Drive forward
+*/
 
   /*
   LeftSide.spin(fwd, 100, pct);
