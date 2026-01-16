@@ -71,83 +71,80 @@ double wrapAngle(double angleDeg) {
 void turn(double deg, bool clockwise){
  
   // RESET THE INERTIAL SENSOR TO ZERO
-  imu.setHeading(0, degrees);
+  imu.setRotation(0, degrees);
 
-  //wait(2, sec); // give time to reset
   // NEXT Get the current inertial value in degrees
   double value = wrapAngle(imu.rotation(vex::rotationUnits::deg));
-  // THEN START TURNING. ( DON'T SPIN AT 100% )
-  /*
-  if (clockwise) {
-    LeftSide.spin(fwd, 8, pct);
-    RightSide.spin(reverse, 8, pct); // TODO: could add a 3rd parameter to allow speed control
-  } else {
-    LeftSide.spin(reverse, 8, pct);
-    RightSide.spin(fwd, 8, pct);
-  }
-  */
+  
   // NOW GO INTO A LOOP.
-  //LeftSide.setVelocity(8, pct);
-  //RightSide.setVelocity(8, pct);
-  FrontLeft.setVelocity(12, pct);
-  MiddleLeft.setVelocity(12, pct);
-  BackLeft.setVelocity(12, pct);
-  FrontRight.setVelocity(12, pct);
-  MiddleRight.setVelocity(12, pct);
-  BackRight.setVelocity(12, pct);
+  LeftSide.setVelocity(8, pct);
+  RightSide.setVelocity(8, pct);
+
 
   while (true) {
 
     if (clockwise) {
-      //LeftSide.spin(fwd);
-      //RightSide.spin(reverse);
-      FrontLeft.spin(fwd);
-      MiddleLeft.spin(fwd);
-      BackLeft.spin(fwd);
-      FrontRight.spin(reverse);
-      MiddleRight.spin(reverse);
-      BackRight.spin(reverse);
+      LeftSide.spin(fwd);
+      RightSide.spin(reverse);
+
       // check the value of the inertial againsted the target degrees
       if (value >= deg) {// BREAK LOOP when the inertial value reaches the target value
         break;
       }
     } else {
-      //LeftSide.spin(reverse);
-      //RightSide.spin(fwd);
-      FrontLeft.spin(reverse);
-      MiddleLeft.spin(reverse);
-      BackLeft.spin(reverse);
-      FrontRight.spin(fwd);
-      MiddleRight.spin(fwd);
-      BackRight.spin(fwd);
+      LeftSide.spin(reverse);
+      RightSide.spin(fwd);
+   
 
       if (value <= -deg) {// BREAK LOOP when the inertial value reaches the target value
         break;
       }
     }
     value = wrapAngle(imu.rotation(vex::rotationUnits::deg)); //update value
-    wait(10, msec); // small delay to prevent wasted resources
+    wait(20, msec); // small delay to prevent wasted resources
 
     // DEBUG:
     Brain.Screen.clearLine();
     Brain.Screen.print("Inertial: %.2f", value);
    }
 
-   //LeftSide.stop();
-   //RightSide.stop();
-   FrontLeft.stop();
-   MiddleLeft.stop();
-   BackLeft.stop();
-   FrontRight.stop();
-   MiddleRight.stop();
-   BackRight.stop();
+   LeftSide.stop();
+   RightSide.stop();
+
 }
 
+void drive_forward(double inches, double speed, double direction = 1) {
+  double wheelCircumference = 3.25 * M_PI; // wheel diameter in inches
+  double rotations = (inches*0.6153) / wheelCircumference; // calculate the number of wheel rotations needed
+  double degreesToRotate = rotations * 360; // convert rotations to degrees
+
+  LeftSide.setVelocity(speed, pct);
+  RightSide.setVelocity(speed, pct);
+  if (direction == 1) {
+    LeftSide.spinFor(fwd, degreesToRotate, degrees, false);
+    RightSide.spinFor(fwd, degreesToRotate, degrees, true);
+  } else {
+    LeftSide.spinFor(reverse, degreesToRotate, degrees, false);
+    RightSide.spinFor(reverse, degreesToRotate, degrees, true);
+  }
+}
+
+
+
 void autonomous(void) {
-  imu.calibrate(2);
-  turn(90, true); // Turn 90 degrees clockwise
+  imu.calibrate();
+  wait(2, sec); // give time to calibrate
+
+  
+  drive_forward(24, 50, 1); // Move forward 24 inches at 50% speed
   wait(1, sec);
-  turn(90, false); // Turn 90 degrees counter-clockwise
+  drive_forward(24, 50, -1); // Move backward 24 inches at 50% speed
+
+  turn(90, true); // Turn 90 degrees clockwise
+  wait(1, sec); // give time to calibrate
+  turn(90, false); // Turn 90 degrees clockwise
+  //wait(1, sec);
+  //turn(90, false); // Turn 90 degrees counter-clockwise
   //Drive forward
 
   /*
@@ -183,10 +180,15 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-
+double value = 0;
 void usercontrol(void) {
   while (1)
   {
+    value = wrapAngle(imu.rotation(vex::rotationUnits::deg)); //update value
+
+    Brain.Screen.clearLine();
+    Brain.Screen.print("Inertial: %.2f", value);
+
     float throttle = Controller.Axis3.value(); //get user input from joystick
 
     if (throttle < 5 && throttle > -5)
