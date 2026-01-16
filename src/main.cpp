@@ -75,7 +75,7 @@ void turn(double deg, bool clockwise){
 
   //wait(2, sec); // give time to reset
   // NEXT Get the current inertial value in degrees
-  double value = wrapAngle(imu.heading());
+  double value = wrapAngle(imu.rotation(vex::rotationUnits::deg));
   // THEN START TURNING. ( DON'T SPIN AT 100% )
   /*
   if (clockwise) {
@@ -87,26 +87,45 @@ void turn(double deg, bool clockwise){
   }
   */
   // NOW GO INTO A LOOP.
-  LeftSide.setVelocity(8, pct);
-  RightSide.setVelocity(8, pct);
+  //LeftSide.setVelocity(8, pct);
+  //RightSide.setVelocity(8, pct);
+  FrontLeft.setVelocity(12, pct);
+  MiddleLeft.setVelocity(12, pct);
+  BackLeft.setVelocity(12, pct);
+  FrontRight.setVelocity(12, pct);
+  MiddleRight.setVelocity(12, pct);
+  BackRight.setVelocity(12, pct);
 
   while (true) {
 
     if (clockwise) {
-      LeftSide.spin(fwd);
-      RightSide.spin(reverse);
-       // check the value of the inertial againsted the target degrees
+      //LeftSide.spin(fwd);
+      //RightSide.spin(reverse);
+      FrontLeft.spin(fwd);
+      MiddleLeft.spin(fwd);
+      BackLeft.spin(fwd);
+      FrontRight.spin(reverse);
+      MiddleRight.spin(reverse);
+      BackRight.spin(reverse);
+      // check the value of the inertial againsted the target degrees
       if (value >= deg) {// BREAK LOOP when the inertial value reaches the target value
         break;
       }
     } else {
-      LeftSide.spin(reverse);
-      RightSide.spin(fwd);
+      //LeftSide.spin(reverse);
+      //RightSide.spin(fwd);
+      FrontLeft.spin(reverse);
+      MiddleLeft.spin(reverse);
+      BackLeft.spin(reverse);
+      FrontRight.spin(fwd);
+      MiddleRight.spin(fwd);
+      BackRight.spin(fwd);
+
       if (value <= -deg) {// BREAK LOOP when the inertial value reaches the target value
         break;
       }
     }
-    value = wrapAngle(imu.heading()); //update value
+    value = wrapAngle(imu.rotation(vex::rotationUnits::deg)); //update value
     wait(10, msec); // small delay to prevent wasted resources
 
     // DEBUG:
@@ -114,9 +133,14 @@ void turn(double deg, bool clockwise){
     Brain.Screen.print("Inertial: %.2f", value);
    }
 
-   LeftSide.stop();
-   RightSide.stop();
-  
+   //LeftSide.stop();
+   //RightSide.stop();
+   FrontLeft.stop();
+   MiddleLeft.stop();
+   BackLeft.stop();
+   FrontRight.stop();
+   MiddleRight.stop();
+   BackRight.stop();
 }
 
 void autonomous(void) {
