@@ -132,6 +132,10 @@ void drive_forward(double inches, double speed, double direction = 1) {
 
 
 void autonomous(void) {
+
+
+
+/*
   imu.calibrate();
   wait(2, sec); // give time to calibrate
 
@@ -142,6 +146,37 @@ void autonomous(void) {
   drive_forward(32, 50, 1);
   turn(70, true);
   drive_forward(8, 50, 1);
+
+  BackIntake.spin(reverse, 75, percent);
+  FrontIntake.spin(reverse, 75, percent);
+  LoneIntake.spin(fwd, 75, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+*/
+
+
+  imu.calibrate();
+  wait(2, sec); // give time to calibrate
+
+  drive_forward(20, 50, 1); // Move forward 24 inches at 50% speed
+  //wait(1, sec);
+  turn(70, true);
+  drive_forward(32, 50, 1);
+  turn(70, false);
+  drive_forward(8, 50, 1);
+
+  BackIntake.spin(reverse, 75, percent);
+  FrontIntake.spin(reverse, 75, percent);
+  LoneIntake.spin(fwd, 75, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+
+  
+
 
   /*
   turn(90, true);  Turn 90 degrees clockwise
