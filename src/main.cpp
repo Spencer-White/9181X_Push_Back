@@ -149,9 +149,9 @@ void autonomous(void) {
   turn(70, true);
   drive_forward(8, 50, 1);
 
-  BackIntake.spin(fwd, 75, percent);
-  FrontIntake.spin(fwd, 75, percent);
-  LoneIntake.spin(fwd, 75, percent);
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
   wait(2, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
@@ -171,9 +171,9 @@ void autonomous(void) {
   turn(70, false);
   drive_forward(8, 50, 1);
 
-  BackIntake.spin(fwd, 75, percent);
-  FrontIntake.spin(fwd, 75, percent);
-  LoneIntake.spin(fwd, 75, percent);
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
   wait(2, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
