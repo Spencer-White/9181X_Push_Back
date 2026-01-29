@@ -147,21 +147,21 @@ void autonomous(void) {
   turn(70, false);
   drive_forward(32, 50, 1);
   turn(70, true);
-  drive_forward(8, 50, 1);
+  drive_forward(10, 50, 1);
 
   BackIntake.spin(fwd, 100, percent);
   FrontIntake.spin(fwd, 100, percent);
   LoneIntake.spin(fwd, 100, percent);
-  wait(0.5, sec);
+  wait(1, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
 
   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
   turn(70, true);
-  drive_forward(10, 50, 1);
+  drive_forward(14.5, 50, 1);
   turn(70, false);
-  drive_forward(15, 50, 1);
+  drive_forward(30, 50, 1);
   Descore.set(true);
 */
 
@@ -181,7 +181,7 @@ void autonomous(void) {
   BackIntake.spin(fwd, 100, percent);
   FrontIntake.spin(fwd, 100, percent);
   LoneIntake.spin(fwd, 100, percent);
-  wait(0.5, sec);
+  wait(2, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
