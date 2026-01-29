@@ -135,8 +135,8 @@ void autonomous(void) {
 
 
 
-/*
-//Left Side (First side created)
+
+//Left Side (First side created), SLOT 1
 
   imu.calibrate();
   wait(2, sec); // give time to calibrate
@@ -156,10 +156,10 @@ void autonomous(void) {
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
-*/
 
 
-//Right Side
+/*
+//Right Side, SLOT 2
 
   imu.calibrate();
   wait(2, sec); // give time to calibrate
@@ -178,10 +178,7 @@ void autonomous(void) {
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
-
-
-
-
+*/
   /*
   turn(90, true);  Turn 90 degrees clockwise
   wait(1, sec);  give time to calibrate
