@@ -133,49 +133,16 @@ void drive_forward(double inches, double speed, double direction = 1) {
 
 void autonomous(void) {
 
-
-
-
-//Left Side (First side created)
+//Left Side (SLOT 1)
 
   imu.calibrate();
   wait(2, sec); // give time to calibrate
 
   
-  drive_forward(20, 50, 1); // Move forward 24 inches at 50% speed
-  //wait(1, sec);
+  drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
   turn(70, false);
-  drive_forward(31, 50, 1);
+  drive_forward(32, 50, 1);
   turn(70, true);
-  drive_forward(10, 50, 1);
-
-  BackIntake.spin(fwd, 100, percent);
-  FrontIntake.spin(fwd, 100, percent);
-  LoneIntake.spin(fwd, 100, percent);
-  wait(1, sec);
-  BackIntake.stop(brake);
-  FrontIntake.stop(brake);
-  LoneIntake.stop(brake);
-
-  drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
-  turn(70, true);
-  drive_forward(11, 50, 1);
-  turn(70, false);
-  drive_forward(30, 50, 1);
-  Descore.set(true);
-
-
-/*
-//Right Side
-
-  imu.calibrate();
-  wait(2, sec); // give time to calibrate
-
- drive_forward(20, 50, 1); // Move forward 24 inches at 50% speed
-  //wait(1, sec);
-  turn(70, true);
-  drive_forward(31, 50, 1);
-  turn(70, false);
   drive_forward(10, 50, 1);
 
   BackIntake.spin(fwd, 100, percent);
@@ -192,8 +159,40 @@ void autonomous(void) {
   turn(70, false);
   drive_forward(30, 50, 1);
   Descore.set(true);
+
+
+//Right Side (SLOT 2)
+/*
+  imu.calibrate();
+  wait(2, sec); // give time to calibrate
+
+ drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
+  turn(70, true);
+  drive_forward(32, 50, 1);
+  turn(70, false);
+  drive_forward(8, 50, 1);
+
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+
+  drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
+  turn(70, false);
+  drive_forward(10, 50, 1);
+  turn(70, true);
+  drive_forward(15, 50, 1);
+  Descore.set(false);
 */
 
+
+
+//Skills (SLOT 3)
+drive_forward(20, 75, 1);
+turn(47, false);
 
 
   /*
