@@ -203,10 +203,21 @@ turn(15, true);
 BackIntake.spin(reverse, 100, percent);
 FrontIntake.spin(fwd, 100, percent);
 
-drive_forward(25, 50, 1);
+drive_forward(30, 50, 1);
 
-BackIntake.spin(reverse, 100, percent);
-FrontIntake.spin(fwd, 100, percent);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+
+turn(70, true);
+drive_forward(15, 50, 1);
+
+BackIntake.spin(fwd, 50, percent);
+FrontIntake.spin(fwd, 50, percent);
+LoneIntake.spin(fwd, 50, percent);
+wait(2, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
 
   /*
   turn(90, true);  Turn 90 degrees clockwise
