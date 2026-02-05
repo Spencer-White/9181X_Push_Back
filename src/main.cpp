@@ -195,6 +195,7 @@ void autonomous(void) {
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
+//to centre goal
 drive_forward(25, 75, 1);
 turn(70, false);
 drive_forward(20, 75, 1);
@@ -203,13 +204,13 @@ turn(15, true);
 BackIntake.spin(reverse, 100, percent);
 FrontIntake.spin(fwd, 100, percent);
 
-drive_forward(30, 50, 1);
+drive_forward(28, 50, 1);
 
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 
 turn(70, true);
-drive_forward(15, 50, 1);
+drive_forward(7, 50, 1);
 
 BackIntake.spin(fwd, 50, percent);
 FrontIntake.spin(fwd, 50, percent);
@@ -219,6 +220,7 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
+//to loader and loading
 turn(70, true);
 drive_forward(25, 75, 1);
 turn(15, false);
@@ -240,6 +242,7 @@ drive_forward(3, 75, 1);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 
+//to long goal
 drive_forward(10, 75, -1);
 turn(140, true);
 
@@ -252,6 +255,7 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
+//to centre goal again
 drive_forward(5, 75, -1);
 turn(70, false);
 drive_forward(5, 75, 1);
@@ -263,11 +267,48 @@ drive_forward(25, 50, 1);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 
-BackIntake.spin(reverse, 100, percent);
-FrontIntake.spin(reverse, 100, percent);
+BackIntake.spin(reverse, 50, percent);
+FrontIntake.spin(reverse, 50, percent);
 wait(3, sec);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
+
+//to different loader and loading
+drive_forward(5, 75, -1);
+turn(70, false);
+drive_forward(30, 75, 1);
+turn(15, true);
+drive_forward(5, 75, 1);
+turn(70, false);
+
+MatchLoader.set(true);
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+
+drive_forward(10, 75, 1);
+drive_forward(3, 75, -1);
+drive_forward(3, 75, 1);
+drive_forward(3, 75, -1);
+drive_forward(3, 75, 1);
+drive_forward(3, 75, -1);
+drive_forward(3, 75, 1);
+
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+
+//to other long goal
+drive_forward(10, 75, -1);
+turn(140, false);
+
+drive_forward(20, 75, 1);
+BackIntake.spin(fwd, 50, percent);
+FrontIntake.spin(fwd, 50, percent);
+LoneIntake.spin(fwd, 50, percent);
+wait(3, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
 
   /*
   turn(90, true);  Turn 90 degrees clockwise
