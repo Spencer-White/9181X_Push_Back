@@ -132,9 +132,8 @@ void drive_forward(double inches, double speed, double direction = 1) {
 
 
 void autonomous(void) {
-
+/*
 //Left Side (SLOT 1)
-
   imu.calibrate();
   wait(2, sec); // give time to calibrate
 
@@ -159,7 +158,7 @@ void autonomous(void) {
   turn(70, false);
   drive_forward(30, 50, 1);
   Descore.set(true);
-
+*/
 
 //Right Side (SLOT 2)
 /*
@@ -191,9 +190,23 @@ void autonomous(void) {
 
 
 //Skills (SLOT 3)
-drive_forward(20, 75, 1);
-turn(47, false);
 
+//NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
+imu.calibrate();
+wait(2, sec); // give time to calibrate
+
+drive_forward(25, 75, 1);
+turn(70, false);
+drive_forward(20, 75, 1);
+turn(15, true);
+
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+
+drive_forward(25, 50, 1);
+
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
 
   /*
   turn(90, true);  Turn 90 degrees clockwise
