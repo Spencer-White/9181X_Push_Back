@@ -210,12 +210,12 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 
 turn(70, true);
-drive_forward(7, 50, 1);
+drive_forward(10, 50, 1);
 
 BackIntake.spin(fwd, 50, percent);
 FrontIntake.spin(fwd, 50, percent);
 LoneIntake.spin(fwd, 50, percent);
-wait(2, sec);
+wait(3, sec);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
