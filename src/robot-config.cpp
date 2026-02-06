@@ -7,7 +7,7 @@ brain Brain;
 //Drivetrain Motors
 controller Controller = controller(primary);
 motor FrontLeft = motor(PORT1, ratio18_1, true);
-motor MiddleLeft = motor(PORT2, ratio18_1, true);
+motor MiddleLeft = motor(PORT18, ratio18_1, true);
 motor BackLeft = motor(PORT3, ratio18_1, true);
 motor FrontRight = motor(PORT4, ratio18_1, false);
 motor MiddleRight = motor(PORT12, ratio18_1, false);
@@ -28,4 +28,3 @@ digital_out Descore = digital_out(Brain.ThreeWirePort.H);
 
 //Inertial Sensor
 inertial imu = inertial(PORT20);
-inertial imu2 = inertial(PORT19);

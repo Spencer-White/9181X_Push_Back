@@ -207,10 +207,10 @@ FrontIntake.spin(fwd, 100, percent);
 drive_forward(25, 50, 1);
 wait (1, sec);
 drive_forward(7, 50, -1);
-drive_forward(10, 50, 1);
+drive_forward(11, 50, 1);
 wait (1, sec);
 drive_forward(7, 50, -1);
-drive_forward(10, 50, 1);
+drive_forward(11, 50, 1);
 wait (1, sec);
 drive_forward(7, 50, -1);
 
@@ -275,7 +275,7 @@ FrontIntake.stop(brake);
 
 //to long goal
 drive_forward(10, 75, -1);
-turn(140, true);
+turn(150, true);
 
 drive_forward(20, 75, 1);
 BackIntake.spin(fwd, 50, percent);
@@ -286,6 +286,9 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
+
+
+/*
 //to centre goal again
 drive_forward(5, 75, -1);
 turn(70, false);
@@ -339,7 +342,7 @@ wait(3, sec);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
-
+*/
 
   /*
   turn(90, true);  Turn 90 degrees clockwise
