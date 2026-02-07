@@ -343,7 +343,7 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
-//going to clear park zone
+//going to clear park zone and park
 drive_forward(5, 50, -1);
 turn(70, false);
 drive_forward(15, 50, 1);
@@ -379,6 +379,7 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 */
+/*
 //to loader and loading
 turn(70, true);
 drive_forward(25, 75, 1);
@@ -413,7 +414,7 @@ wait(3, sec);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
-
+*/
 
 
 /*
@@ -545,17 +546,22 @@ void usercontrol(void) {
     leftpow = throttle + turn;
     rightpow = throttle - turn;
 
+    double sum = (leftpow + rightpow) / 12;
+    if (sum > 1) {
+      leftpow /= sum;
+      rightpow /= sum;
+    }
     if (leftpow == 0)
     {
-      LeftSide.stop(brake);
+      LeftSide.stop(brake); 
     }
     if (rightpow == 0)
     {
       RightSide.stop(brake);
     }
 
-    LeftSide.spin(fwd, (leftpow * 0.12), volt);
-    RightSide.spin(fwd, (rightpow * 0.12), volt);
+    LeftSide.spin(fwd, leftpow, volt);
+    RightSide.spin(fwd, rightpow, volt);
     
     //LeftSide.spin(fwd, 255, volt);
     //RightSide.spin(fwd, 255, volt);
