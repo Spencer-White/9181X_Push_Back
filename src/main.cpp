@@ -343,6 +343,22 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
+//going to clear park zone
+drive_forward(5, 50, -1);
+turn(70, false);
+drive_forward(15, 50, 1);
+turn(70, false);
+drive_forward(20, 50, 1);
+turn(70, true);
+drive_forward(30, 100, 1);
+turn(70, true);
+drive_forward(25, 50, 1);
+turn(70, true);
+drive_forward(15, 50, 1);
+turn(70, true);
+drive_forward(15, 50, -1);
+drive_forward(35, 100, 1);
+
 /*
 BackIntake.spin(reverse, 100, percent);
 FrontIntake.spin(fwd, 100, percent);
