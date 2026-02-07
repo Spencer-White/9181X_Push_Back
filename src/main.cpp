@@ -525,19 +525,19 @@ void usercontrol(void) {
     Brain.Screen.clearLine();
     Brain.Screen.print("Inertial: %.2f", value);
 
-    float throttle = Controller.Axis3.value(); //get user input from joystick
+    float throttle = Controller.Axis3.position(); //get user input from joystick
 
     if (throttle < 5 && throttle > -5)
     {
       throttle = 0;
     }
-    float turn = Controller.Axis1.value();
+    float turn = Controller.Axis1.position();
     if (turn < 5 && turn > -5)
     {
       turn = 0;
     }
-    throttle /= 1.27;
-    turn /= 1.27;
+    // throttle /= 1.27;
+    // turn /= 1.27;
 
     throttle = pow(throttle, 3) / pow(10, 4);
     turn = pow(turn, 3) / pow(10, 4);
@@ -548,7 +548,7 @@ void usercontrol(void) {
     leftpow = throttle + turn;
     rightpow = throttle - turn;
 
-    // double sum = (leftpow + rightpow) / 12;
+    // double sum = (leftpow + rightpow) / 100;
     // if (sum > 1) {
     //   leftpow /= sum;
     //   rightpow /= sum;
