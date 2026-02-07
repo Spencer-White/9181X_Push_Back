@@ -536,6 +536,9 @@ void usercontrol(void) {
     {
       turn = 0;
     }
+    throttle /= 1.27;
+    turn /= 1.27;
+
     throttle = pow(throttle, 3) / pow(10, 4);
     turn = pow(turn, 3) / pow(10, 4);
 
@@ -545,11 +548,11 @@ void usercontrol(void) {
     leftpow = throttle + turn;
     rightpow = throttle - turn;
 
-    double sum = (leftpow + rightpow) / 12;
-    if (sum > 1) {
-      leftpow /= sum;
-      rightpow /= sum;
-    }
+    // double sum = (leftpow + rightpow) / 12;
+    // if (sum > 1) {
+    //   leftpow /= sum;
+    //   rightpow /= sum;
+    // }
     if (leftpow == 0)
     {
       LeftSide.stop(brake);
@@ -559,12 +562,12 @@ void usercontrol(void) {
       RightSide.stop(brake);
     }
 
-    std::cout << leftpow << std::endl;
-    std::cout << rightpow << std::endl;
+    std::cout << throttle << std::endl;
+    std::cout << turn << std::endl;
 
-    LeftSide.spin(fwd, leftpow, volt);
-    RightSide.spin(fwd, rightpow, volt);
-    
+    LeftSide.spin(fwd, (leftpow * 12) / 100, volt);
+    RightSide.spin(fwd, (rightpow * 12) / 100, volt);
+
     //LeftSide.spin(fwd, 255, volt);
     //RightSide.spin(fwd, 255, volt);
 
