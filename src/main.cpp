@@ -10,6 +10,7 @@
 #include "vex.h"
 #include "robot-config.h"
 #include <cmath>
+#include <iostream>
 
 //using namespace vex;
 
@@ -530,15 +531,13 @@ void usercontrol(void) {
     {
       throttle = 0;
     }
-    throttle = throttle / 1.27;
     float turn = Controller.Axis1.value();
     if (turn < 5 && turn > -5)
     {
       turn = 0;
     }
-    turn = turn / 1.27;
-    throttle = pow(throttle, 3) / 10000;
-    turn = pow(turn, 3) / 10000;
+    throttle = pow(throttle, 3) / pow(10, 4);
+    turn = pow(turn, 3) / pow(10, 4);
 
     float leftpow;
     float rightpow;
@@ -553,12 +552,15 @@ void usercontrol(void) {
     }
     if (leftpow == 0)
     {
-      LeftSide.stop(brake); 
+      LeftSide.stop(brake);
     }
     if (rightpow == 0)
     {
       RightSide.stop(brake);
     }
+
+    std::cout << leftpow << std::endl;
+    std::cout << rightpow << std::endl;
 
     LeftSide.spin(fwd, leftpow, volt);
     RightSide.spin(fwd, rightpow, volt);
