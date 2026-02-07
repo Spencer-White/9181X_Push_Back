@@ -196,9 +196,33 @@ void autonomous(void) {
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
-drive_forward(30, 50, -1); 
+drive_forward(1, 50, -1); // Move forward 20 inches at 50% speed
+drive_forward(20, 100, 1); // Move forward 20 inches at 50% speed
+
+/*
+  drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
+  turn(70, false);
+  drive_forward(32, 50, 1);
+  turn(70, true);
+  drive_forward(8, 50, 1);
+
+  BackIntake.spin(fwd, 75, percent);
+  FrontIntake.spin(fwd, 75, percent);
+  LoneIntake.spin(fwd, 75, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+
+drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
 wait (0.5, sec);
-drive_forward(50, 100, 1);
+turn(70, true);
+drive_forward(43, 50, 1);
+wait (0.5, sec);
+turn(70, true);
+drive_forward(11.5, 50, -1);
+drive_forward(55, 100, 1);
+*/
 
 //first loader
 /*
