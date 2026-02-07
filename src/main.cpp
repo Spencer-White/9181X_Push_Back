@@ -195,7 +195,7 @@ void autonomous(void) {
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
-//loading
+//first loader
 drive_forward(25, 75, 1);
 turn(70, false);
 drive_forward(30, 75, 1);
@@ -205,13 +205,13 @@ MatchLoader.set(true);
 BackIntake.spin(reverse, 100, percent);
 FrontIntake.spin(fwd, 100, percent);
 drive_forward(25, 50, 1);
-wait (1, sec);
+wait (0.5, sec);
 drive_forward(7, 50, -1);
-drive_forward(11, 50, 1);
-wait (1, sec);
+drive_forward(13, 50, 1);
+wait (0.5, sec);
 drive_forward(7, 50, -1);
-drive_forward(11, 50, 1);
-wait (1, sec);
+drive_forward(14, 50, 1);
+wait (0.5, sec);
 drive_forward(7, 50, -1);
 
 BackIntake.stop(brake);
@@ -219,6 +219,7 @@ FrontIntake.stop(brake);
 drive_forward(10, 75, -1);
 MatchLoader.set(false);
 
+//to long goal
 turn(140, false);
 drive_forward(15, 75, 1);
 
@@ -230,7 +231,118 @@ BackIntake.stop(brake);
 FrontIntake.stop(brake);
 LoneIntake.stop(brake);
 
-wait (10, sec);
+//second loader
+drive_forward(5, 50, -1);
+turn(70, true);
+drive_forward(60, 50, 1);
+turn(70, true);
+
+MatchLoader.set(true);
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(25, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(13, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(14, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+drive_forward(10, 75, -1);
+MatchLoader.set(false);
+
+//to other long goal
+turn(140, false);
+drive_forward(15, 75, 1);
+
+BackIntake.spin(fwd, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+LoneIntake.spin(fwd, 100, percent);
+wait(3, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
+//third loader
+drive_forward(5, 50, -1);
+turn(70, true);
+drive_forward(10, 50, 1);
+turn(70, false);
+drive_forward(60, 50, 1);
+turn(70, false);
+drive_forward(10, 50, 1);
+turn(70, true);
+
+MatchLoader.set(true);
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(25, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(13, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(14, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+drive_forward(10, 75, -1);
+MatchLoader.set(false);
+
+//same long goal
+turn(140, false);
+drive_forward(15, 75, 1);
+
+BackIntake.spin(fwd, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+LoneIntake.spin(fwd, 100, percent);
+wait(3, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
+//to fourth loader
+drive_forward(5, 50, -1);
+turn(70, true);
+drive_forward(60, 50, 1);
+turn(70, true);
+
+MatchLoader.set(true);
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(25, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(13, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+drive_forward(14, 50, 1);
+wait (0.5, sec);
+drive_forward(7, 50, -1);
+
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+drive_forward(10, 75, -1);
+MatchLoader.set(false);
+
+//to long goal
+turn(140, false);
+drive_forward(15, 75, 1);
+
+BackIntake.spin(fwd, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+LoneIntake.spin(fwd, 100, percent);
+wait(3, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
 /*
 BackIntake.spin(reverse, 100, percent);
 FrontIntake.spin(fwd, 100, percent);
