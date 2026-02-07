@@ -196,30 +196,52 @@ void autonomous(void) {
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
+drive_forward(30, 50, -1); 
+wait (0.5, sec);
+drive_forward(50, 100, 1);
+
 //first loader
+/*
 drive_forward(25, 75, 1);
+wait(0.5, sec);
 turn(70, false);
-drive_forward(30, 75, 1);
-turn(70, false);
+drive_forward(35, 75, 1);
+wait(0.5, sec);
+turn(80, false);
 
 MatchLoader.set(true);
-BackIntake.spin(reverse, 100, percent);
+wait(0.5, sec);
+BackIntake.spin(reverse, 100, percent); 
 FrontIntake.spin(fwd, 100, percent);
-drive_forward(25, 50, 1);
-wait (0.5, sec);
-drive_forward(7, 50, -1);
-drive_forward(13, 50, 1);
-wait (0.5, sec);
-drive_forward(7, 50, -1);
-drive_forward(14, 50, 1);
-wait (0.5, sec);
-drive_forward(7, 50, -1);
 
+drive_forward(25, 75, 1);
+wait (3, sec); 
+*/
+// drive_forward(25, 50, 1); 
+// wait (0.5, sec);
+// drive_forward(7, 50, -1);
+// drive_forward(14, 50, 1);
+// wait (0.5, sec);
+// drive_forward(7, 50, -1);
+// drive_forward(15, 50, 1);
+// wait (0.5, sec);
+// drive_forward(7, 50, -1);
+/*
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
 drive_forward(10, 75, -1);
 MatchLoader.set(false);
-
+wait(0.5, sec);
+turn(70, true);
+drive_forward(10, 75, 1);
+wait(0.5, sec);
+turn(70, true);
+drive_forward(25, 75, 1);
+wait(0.5, sec);
+turn(70, false);
+drive_forward(30, 100, 1);
+*/
+/*
 //to long goal
 turn(140, false);
 drive_forward(15, 75, 1);
@@ -359,6 +381,7 @@ drive_forward(15, 50, 1);
 turn(70, true);
 drive_forward(15, 50, -1);
 drive_forward(35, 100, 1);
+*/
 
 /*
 BackIntake.spin(reverse, 100, percent);
@@ -638,9 +661,9 @@ void usercontrol(void) {
     //Basket Intake Control
      else if(Controller.ButtonL1.pressing())
     {
-      BackIntake.spin(reverse, 100, percent);
-      FrontIntake.spin(fwd, 100, percent);
-      LoneIntake.spin(fwd, 100, percent);
+    BackIntake.spin(reverse, 100, percent);
+    FrontIntake.spin(fwd, 100, percent);
+    LoneIntake.spin(fwd, 100, percent);
     } 
     
     //Low Goal Intake Control
