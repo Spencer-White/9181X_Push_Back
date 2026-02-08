@@ -133,7 +133,7 @@ void drive_forward(double inches, double speed, double direction = 1) {
 
 
 void autonomous(void) {
-/*
+
 //Left Side (SLOT 1)
   imu.calibrate();
   wait(2, sec); // give time to calibrate
@@ -155,41 +155,41 @@ void autonomous(void) {
 
   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
   turn(70, true);
-  drive_forward(15, 50, 1);
+  drive_forward(13, 50, 1);
   turn(70, false);
   drive_forward(30, 50, 1);
   Descore.set(true);
-*/
+
 
 //Right Side (SLOT 2)
 /*
   imu.calibrate();
   wait(2, sec); // give time to calibrate
 
- drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
+  drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
   turn(70, true);
   drive_forward(32, 50, 1);
   turn(70, false);
-  drive_forward(8, 50, 1);
+  drive_forward(10, 50, 1);
 
   BackIntake.spin(fwd, 100, percent);
   FrontIntake.spin(fwd, 100, percent);
   LoneIntake.spin(fwd, 100, percent);
-  wait(2, sec);
+  wait(1, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
 
   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
-  turn(70, false);
-  drive_forward(10, 50, 1);
   turn(70, true);
-  drive_forward(15, 50, 1);
-  Descore.set(false);
+  drive_forward(12, 50, 1);
+  turn(70, false);
+  drive_forward(30, 50, 1);
+  Descore.set(true);
 */
 
 
-
+/*
 //Skills (SLOT 3)
 
 //NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
@@ -199,7 +199,7 @@ wait(2, sec); // give time to calibrate
 drive_forward(1, 50, -1); // Move forward 20 inches at 50% speed
 drive_forward(20, 100, 1); // Move forward 20 inches at 50% speed
 
-/*
+
   drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
   turn(70, false);
   drive_forward(32, 50, 1);
@@ -734,112 +734,3 @@ int main() {
      }
 }
 
-//Inertial Sensor Setup
-/*
-//Configuration
-double wheelSize = 3.25; //Wheel diameter in inches
-double wheelCircumference = wheelSize * M_PI; //Calculate wheel circumference
-
-double offset = 0; //Distance from center of robot to tracking wheel in inches
-
-double x_pos = 0; 
-double y_pos = 0; 
-double theta = 0;
-
-double turn_to_radians(double turn_degrees) {
-  return turn_degrees * (M_PI / 180.0); 
-}
-double radians_to_turn(double radians) {
-  return radians * (180.0 / M_PI);
-}
-
-void Setposition(double x, double y, double degrees) {
-  x_pos = x;
-  y_pos = y;
-  theta = turn_to_radians(degrees);
-}
-
-
-
-void updatePos() {
-
-
-  //Gathers current values
-  double heading_degrees = wrapAngle(imu.getheading());
-  double tracking_degrees = LeftSide.getposition(); + RightSide.getposition() / 2.0;
-
-  //Change in heading
-  double delta_heading = heading_degrees - previous_inertial;
-  double delta_tracking = tracking_degrees - previous_tracking;
-
-  //Storing new tracking value for repeat
-  previous_tracking = tracking_degrees;
-  previous_inertial = heading_degrees;
-
-  //Convert to linear distance
-  double delta_distance = (delta_tracking/360) * wheelCircumference;
-
-  //Update position
-  x_pos += delta_distance * std::cos(turn_to_radians(heading_degrees));
-  y_pos += delta_distance * std::sin(turn_to_radians(heading_degrees));
-  theta = turn_to_radians(heading_degrees);
-
-  //Print position on the brain screen
-  print(2, "X_Position: %.2f inches", x_pos);
-  print(3, "Y_Position: %.2f inches", y_pos);
-  print(4, "Heading: %.2f degrees", radians_to_turn(theta));
-}
-
-
-
-void resetOdometry() {
-
-  //Calibrate the IMU (only id not already calibrated)
-  imu.reset();
-  wait(200, msec); //Minimal time to begin calibration
-
-  //Wait until the IMU finishes calibrating (can take 1-2 seconds)
-  while (imu.is_calibrating()) {
-    wait(10, msec);
-  }
-  //Zero the rotation sensor (tracking wheel)
-  verticalEnc.reset_position();
-
-  //Reset global odometry positions
-  x_pos = 0.0;
-  y_pos = 0.0;
-  theta = turn_to_radians(degrees:0.0);
-
-  //Store the inertial sensor readings for next update
-  previous_inertial = wrapAngle(imu.get_heading()); //IMU heading
-  previous_tracking = verticalEnc.get_position(); //Rotation sensor degrees
-
-}
-
-void resetOdometryAuto () {
-
-  //Only reset tracking wheel here
-  vertical_Enc.reset_position();
-
-  //Reset global pose
-  x_pos = 0.0;
-  y_pos = 0.0;
-
-  //Set previous sensor logs
-  previous_inertial = wrapAngle(imu.get_heading());
-  previous_tracking = verticalEnc.get_position();
-}
-
-void odom_task_fn(void*) {
-  while (true) {
-    updatePos();
-    wait(10, msec); //Time between position updates
-  }
-}
-*/
-
-void initialize() {
- // pros::lcd::initialize();
-  //imu.isCalibrating();
-  //Task odom_task(odom_task_fn, parameters(void*)"ODOM", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Odom Task");
-}
