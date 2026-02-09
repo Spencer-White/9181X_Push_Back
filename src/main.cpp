@@ -133,7 +133,7 @@ void drive_forward(double inches, double speed, double direction = 1) {
 
 
 void autonomous(void) {
-
+/*
 //Left Side (SLOT 1)
   imu.calibrate();
   wait(2, sec); // give time to calibrate
@@ -159,7 +159,7 @@ void autonomous(void) {
   turn(70, false);
   drive_forward(30, 50, 1);
   Descore.set(true);
-
+*/
 
 //Right Side (SLOT 2)
 /*
@@ -189,13 +189,55 @@ void autonomous(void) {
 */
 
 
-/*
+
 //Skills (SLOT 3)
 
 //NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
+//move to loader
+drive_forward(40, 50, 1); // Move forward 20 inches at 50% speed
+wait(0.5, sec);
+turn(70, false);
+//load blocks
+MatchLoader.set(true);
+BackIntake.spin(reverse, 100, percent); 
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(15, 50, 1);
+wait (3, sec);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+//move to long goal
+drive_forward(10, 50, -1);
+wait(0.5, sec);
+turn(145, true);
+drive_forward(10, 50, 1);
+  BackIntake.spin(fwd, 75, percent);
+  FrontIntake.spin(fwd, 75, percent);
+  LoneIntake.spin(fwd, 75, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+//go and descore
+drive_forward(10, 50, -1);
+wait (0.5, sec);
+turn(70, true);
+drive_forward(12, 50, 1);
+Descore.set(true);
+wait(0.5, sec);
+turn(70, false);
+drive_forward(5, 50, 1);
+//go to park zone 
+drive_forward(35, 50, -1);
+wait(0.5, sec);
+turn(80, true);
+drive_forward(20, 100, 1);
+
+
+
+/*
 drive_forward(1, 50, -1); // Move forward 20 inches at 50% speed
 drive_forward(20, 100, 1); // Move forward 20 inches at 50% speed
 
