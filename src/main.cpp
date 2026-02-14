@@ -193,30 +193,51 @@ void autonomous(void) {
 //Skills (SLOT 3)
 
 //NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
+
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(18, 100, 1); // Move forward 20 inches at 50% speed
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+
+
+
+
+/*
 imu.calibrate();
 wait(2, sec); // give time to calibrate
 
 //move to loader
-drive_forward(40, 50, 1); // Move forward 20 inches at 50% speed
+drive_forward(47, 50, 1); // Move forward 40 inches at 50% speed
 wait(0.5, sec);
-turn(70, false);
+turn(28, false);
 //load blocks
 MatchLoader.set(true);
+wait(1, sec);
 BackIntake.spin(reverse, 100, percent); 
 FrontIntake.spin(fwd, 100, percent);
-drive_forward(15, 50, 1);
-wait (3, sec);
+drive_forward(15, 30, 1);
+wait(5, sec);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
-//move to long goal
-drive_forward(10, 50, -1);
+//move to park zone
+drive_forward(15, 50, -1);
+MatchLoader.set(false);
 wait(0.5, sec);
-turn(145, true);
-drive_forward(10, 50, 1);
-  BackIntake.spin(fwd, 75, percent);
-  FrontIntake.spin(fwd, 75, percent);
-  LoneIntake.spin(fwd, 75, percent);
-  wait(2, sec);
+turn (70, false);
+drive_forward(48.5, 50, 1);
+wait(0.5, sec);
+turn(70, true);
+wait(0.5, sec);
+*/
+
+/*
+turn(160, true);
+drive_forward(16, 50, 1);
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
+  wait(10, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
@@ -224,17 +245,18 @@ drive_forward(10, 50, 1);
 drive_forward(10, 50, -1);
 wait (0.5, sec);
 turn(70, true);
-drive_forward(12, 50, 1);
-Descore.set(true);
+drive_forward(11, 50, 1);
 wait(0.5, sec);
 turn(70, false);
-drive_forward(5, 50, 1);
+drive_forward(15, 50, 1);
+*/
 //go to park zone 
+/*
 drive_forward(35, 50, -1);
 wait(0.5, sec);
 turn(80, true);
+*/
 drive_forward(20, 100, 1);
-
 
 
 /*
