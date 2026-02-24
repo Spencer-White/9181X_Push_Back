@@ -735,7 +735,7 @@ void usercontrol(void) {
     //Low Goal Intake Control
      else if(Controller.ButtonL2.pressing())
     {
-      BackIntake.spin(reverse, 100, percent);
+      BackIntake.spin(fwd, 100, percent);
       FrontIntake.spin(reverse, 100, percent);
       LoneIntake.spin(fwd, 100, percent);
     } 
