@@ -135,41 +135,14 @@ void drive_forward(double inches, double speed, double direction = 1) {
 void autonomous(void) {
 
 //Left Side (SLOT 1)
-  // imu.calibrate();
-  // wait(2, sec); // give time to calibrate
-
-  
-  // drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
-  // turn(70, false);
-  // drive_forward(32, 50, 1);
-  // turn(70, true);
-  // drive_forward(10, 50, 1);
-
-  // BackIntake.spin(fwd, 100, percent);
-  // FrontIntake.spin(fwd, 100, percent);
-  // LoneIntake.spin(fwd, 100, percent);
-  // wait(1, sec);
-  // BackIntake.stop(brake);
-  // FrontIntake.stop(brake);
-  // LoneIntake.stop(brake);
-
-  // drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
-  // turn(70, true);
-  // drive_forward(13, 50, 1);
-  // turn(70, false);
-  // drive_forward(30, 50, 1);
-  // Descore.set(true);
-
-
-//Right Side (SLOT 2)
-
   imu.calibrate();
   wait(2, sec); // give time to calibrate
 
+  
   drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
-  turn(70, true);
-  drive_forward(32, 50, 1);
   turn(70, false);
+  drive_forward(32, 50, 1);
+  turn(70, true);
   drive_forward(10, 50, 1);
 
   BackIntake.spin(fwd, 100, percent);
@@ -182,16 +155,75 @@ void autonomous(void) {
 
   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
   turn(70, true);
-  drive_forward(12, 50, 1);
+  drive_forward(13, 50, 1);
   turn(70, false);
-  drive_forward(29, 50, 1);
+  drive_forward(30, 50, 1);
   Descore.set(true);
 
 
 
-//Skills (SLOT 3)
+  //Left Side V2
+  BackIntake.spin(reverse, 100, percent); 
+  FrontIntake.spin(fwd, 100, percent);
+  drive_forward(20, 75, 1);
+  wait(0.25, sec);
+  turn(70, false);
+  drive_forward(25, 75, 1);
+  wait(0.25, sec);
+  turn(110, true);
+  drive_forward(2, 50, 1);
+  BackIntake.spin(fwd, 50, percent);
+  FrontIntake.spin(fwd, 50, percent);
+  LoneIntake.spin(reverse, 50, percent);
+  wait (3, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
+  drive_forward(25, 75, -1);
+  wait(0.25, sec);
+  turn(40, false);
+  drive_forward(5, 50, 1);
+  BackIntake.spin(fwd, 50, percent);
+  FrontIntake.spin(fwd, 50, percent);
+  LoneIntake.spin(reverse, 50, percent);
+  wait(2, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
 
-//NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
+
+
+// Right Side (SLOT 2)
+
+//   imu.calibrate();
+//   wait(2, sec); // give time to calibrate
+
+//   drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
+//   turn(70, true);
+//   drive_forward(32, 50, 1);
+//   turn(70, false);
+//   drive_forward(10, 50, 1);
+
+//   BackIntake.spin(fwd, 100, percent);
+//   FrontIntake.spin(fwd, 100, percent);
+//   LoneIntake.spin(fwd, 100, percent);
+//   wait(1, sec);
+//   BackIntake.stop(brake);
+//   FrontIntake.stop(brake);
+//   LoneIntake.stop(brake);
+
+//   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
+//   turn(70, true);
+//   drive_forward(12, 50, 1);
+//   turn(70, false);
+//   drive_forward(29, 50, 1);
+//   Descore.set(true);
+
+
+
+// Skills (SLOT 3)
+
+// NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
 
 // BackIntake.spin(reverse, 100, percent);
 // FrontIntake.spin(fwd, 100, percent);
