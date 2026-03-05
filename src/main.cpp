@@ -167,25 +167,25 @@ wait(2, sec); // give time to calibrate
   FrontIntake.spin(fwd, 100, percent);
   drive_forward(5, 75, 1);
   wait(0.25, sec);
-  turn(70, true);
-  drive_forward(25, 50, 1);
+  turn(69, true);
+  drive_forward(25, 75, 1);
   wait(0.5, sec);
-  turn(15, true);
-  drive_forward(12, 50, 1);
+  turn(16, true);
+  drive_forward(11, 50, 1);
   BackIntake.spin(fwd, 75, percent);
   FrontIntake.spin(fwd, 75, percent);
-  LoneIntake.spin(reverse, 75, percent);
-  wait (2, sec);
+  LoneIntake.spin(fwd, 75, percent);
+  wait (1.5, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
-  drive_forward(25, 75, -1);
+  drive_forward(47, 75, -1);
   wait(0.25, sec);
-  turn(40, false);
-  drive_forward(5, 50, 1);
-  BackIntake.spin(fwd, 50, percent);
-  FrontIntake.spin(fwd, 50, percent);
-  LoneIntake.spin(reverse, 50, percent);
+  turn(23, false);
+  drive_forward(19, 50, 1);
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
   wait(2, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
@@ -227,7 +227,7 @@ wait(2, sec); // give time to calibrate
 
 // BackIntake.spin(reverse, 100, percent);
 // FrontIntake.spin(fwd, 100, percent);
-// drive_forward(18, 100, 1); // Move forward 20 inches at 50% speed
+// drive_forward(18, 100, 1); // Move forward 18 inches at 100% speed
 // BackIntake.stop(brake);
 // FrontIntake.stop(brake);
 
@@ -287,7 +287,7 @@ drive_forward(35, 50, -1);
 wait(0.5, sec);
 turn(80, true);
 */
-drive_forward(20, 100, 1);
+// drive_forward(20, 100, 1);
 
 
 /*
