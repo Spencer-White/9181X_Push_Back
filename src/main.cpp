@@ -165,10 +165,10 @@ wait(2, sec); // give time to calibrate
   //Left Side V2
   BackIntake.spin(reverse, 100, percent); 
   FrontIntake.spin(fwd, 100, percent);
-  drive_forward(5, 75, 1);
+  drive_forward(5, 90, 1);
   wait(0.25, sec);
   turn(69, true);
-  drive_forward(25, 75, 1);
+  drive_forward(25, 90, 1);
   wait(0.5, sec);
   turn(16, true);
   drive_forward(11, 50, 1);
@@ -179,7 +179,8 @@ wait(2, sec); // give time to calibrate
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
-  drive_forward(47, 75, -1);
+
+  drive_forward(47, 90, -1);
   wait(0.25, sec);
   turn(23, false);
   drive_forward(19, 50, 1);
@@ -191,7 +192,26 @@ wait(2, sec); // give time to calibrate
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
 
+  drive_forward(10, 90, -1);
+  turn(145, true);
+  MatchLoader.set(true);
+  drive_forward(15, 50, 1);
+  wait(0.5, sec);
+  drive_forward(15, 90, -1);
+  wait(0.25, sec);
+  drive_forward(15, 50, 1);
+  wait(0.5, sec);
+  drive_forward(15, 90, -1);
 
+  turn (145, false);
+  drive_forward(10, 90, 1);
+  BackIntake.spin(fwd, 100, percent);
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
+  wait(3, sec);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
 
 // Right Side (SLOT 2)
 
