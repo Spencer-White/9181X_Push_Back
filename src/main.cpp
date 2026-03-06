@@ -33,8 +33,16 @@ double previous_tracking = 0;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void pre_auton(void) {
+void calibrateInertial()
+{
+  imu.calibrate();
+  while (imu.isCalibrating())
+  wait(50, msec);
+  Controller.rumble("..");
+  std::cout << "Inertial calibrated" << std::endl;
+}
 
+void pre_auton(void) {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   MatchLoader.set(false);
@@ -135,10 +143,6 @@ void drive_forward(double inches, double speed, double direction = 1) {
 void autonomous(void) {
 
 //Left Side (SLOT 1)
-imu.calibrate();
-wait(2, sec); // give time to calibrate
-
-  
   // drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
   // turn(70, false);
   // drive_forward(32, 50, 1);
@@ -165,13 +169,13 @@ wait(2, sec); // give time to calibrate
   //Left Side V2
   BackIntake.spin(reverse, 100, percent); 
   FrontIntake.spin(fwd, 100, percent);
-  drive_forward(5, 90, 1);
+  drive_forward(5, 100, 1);
   wait(0.25, sec);
-  turn(69, true);
-  drive_forward(25, 90, 1);
+  turn(67, true);
+  drive_forward(26, 50, 1);
   wait(0.5, sec);
-  turn(16, true);
-  drive_forward(11, 50, 1);
+  turn(19, true);
+  drive_forward(12, 50, 1);
   BackIntake.spin(fwd, 75, percent);
   FrontIntake.spin(fwd, 75, percent);
   LoneIntake.spin(fwd, 75, percent);
@@ -180,31 +184,35 @@ wait(2, sec); // give time to calibrate
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
 
-  drive_forward(47, 90, -1);
+  drive_forward(45, 90, -1);
   wait(0.25, sec);
-  turn(23, false);
+  turn(21, false);
   drive_forward(19, 50, 1);
   BackIntake.spin(fwd, 100, percent);
   FrontIntake.spin(fwd, 100, percent);
   LoneIntake.spin(fwd, 100, percent);
-  wait(2, sec);
+  wait(1.5, sec);
   BackIntake.stop(brake);
   FrontIntake.stop(brake);
   LoneIntake.stop(brake);
 
-  drive_forward(10, 90, -1);
+  drive_forward(10, 100, -1);
   turn(145, true);
+  BackIntake.spin(reverse, 100, percent); 
+  FrontIntake.spin(fwd, 100, percent);
+  LoneIntake.spin(fwd, 100, percent);
   MatchLoader.set(true);
-  drive_forward(15, 50, 1);
-  wait(0.5, sec);
-  drive_forward(15, 90, -1);
-  wait(0.25, sec);
-  drive_forward(15, 50, 1);
-  wait(0.5, sec);
-  drive_forward(15, 90, -1);
+  wait (0.75, sec);
+  drive_forward(25, 75, 1);
+  wait(0.75, sec);
+  drive_forward(15, 100, -1);
+  MatchLoader.set(false);
+  BackIntake.stop(brake);
+  FrontIntake.stop(brake);
+  LoneIntake.stop(brake);
 
   turn (145, false);
-  drive_forward(10, 90, 1);
+  drive_forward(10, 100, 1);
   BackIntake.spin(fwd, 100, percent);
   FrontIntake.spin(fwd, 100, percent);
   LoneIntake.spin(fwd, 100, percent);
