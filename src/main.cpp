@@ -243,47 +243,63 @@ void autonomous(void) {
 
 // NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
 
-BackIntake.spin(reverse, 100, percent);
+
+// BackIntake.spin(reverse, 100, percent);
+// FrontIntake.spin(fwd, 100, percent);
+// drive_forward(30, 100, 1); // Move forward 18 inches at 100% speed
+// BackIntake.stop(brake);
+// FrontIntake.stop(brake);
+
+
+drive_forward(10, 50, 1);
+wait(0.25, sec);
+turn(70, true, 35);
+drive_forward(10, 50, 1);
+wait(0.25, sec);
+turn(70, false, 35);
+drive_forward(20, 50, 1);
+
+wait(0.25, sec);
+turn(70, false, 35);
+BackIntake.spin(reverse, 100, percent); 
 FrontIntake.spin(fwd, 100, percent);
-drive_forward(30, 100, 1); // Move forward 18 inches at 100% speed
+LoneIntake.spin(fwd, 100, percent);
+MatchLoader.set(true);
+wait(0.75, sec);
+drive_forward(18, 75, 1);
+wait(3, sec);
+drive_forward(15, 75, -1);
+MatchLoader.set(false);
 BackIntake.stop(brake);
 FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
+wait(0.25, sec);
+turn(70, false, 35);
+drive_forward(90, 75, 1);
+wait(0.25, sec);
+turn(70, true, 35);
+BackIntake.spin(reverse, 100, percent); 
+FrontIntake.spin(fwd, 100, percent);
+LoneIntake.spin(fwd, 100, percent);
+MatchLoader.set(true);
+wait(0.75, sec);
+drive_forward(18, 75, 1);
+wait(3, sec);
+drive_forward(15, 75, -1);
+MatchLoader.set(false);
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+LoneIntake.stop(brake);
+
 wait(0.25, sec);
 turn(70, true, 35);
 drive_forward(10, 75, 1);
 wait(0.25, sec);
 turn(70, false, 35);
 drive_forward(10, 75, 1);
-
 wait(0.25, sec);
-turn(70, false, 35);
-MatchLoader.set(true);
-wait(0.75, sec);
-drive_forward(10, 75, 1);
-wait(3, sec);
-drive_forward(10, 75, -1);
-MatchLoader.set(false);
-
-wait(0.25, sec);
-turn(70, false);
-drive_forward(60, 75, 1);
-wait(0.25, sec);
-turn(70, true);
-MatchLoader.set(true);
-wait(0.75, sec);
-drive_forward(10, 75, 1);
-wait(3, sec);
-drive_forward(10, 75, -1);
-MatchLoader.set(false);
-
-wait(0.25, sec);
-turn(70, true);
-drive_forward(10, 75, 1);
-wait(0.25, sec);
-turn(70, false);
-drive_forward(10, 75, 1);
-wait(0.25, sec);
-turn (70, true);
+turn (70, true, 35);
 drive_forward(20, 100, 1);
 
 /*
