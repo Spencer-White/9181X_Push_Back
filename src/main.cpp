@@ -77,7 +77,7 @@ double wrapAngle(double angleDeg) {
   return angleDeg;
 }
 
-void turn(double deg, bool clockwise){
+void turn(double deg, bool clockwise, int speed){
  
   // RESET THE INERTIAL SENSOR TO ZERO
   imu.setRotation(0, degrees);
@@ -86,8 +86,8 @@ void turn(double deg, bool clockwise){
   double value = wrapAngle(imu.rotation(vex::rotationUnits::deg));
   
   // NOW GO INTO A LOOP.
-  LeftSide.setVelocity(35, pct);
-  RightSide.setVelocity(35, pct);
+  LeftSide.setVelocity(speed, pct);
+  RightSide.setVelocity(speed, pct);
 
 
   while (true) {
@@ -144,9 +144,9 @@ void autonomous(void) {
 
 //Left Side (SLOT 1)
   // drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
-  // turn(70, false);
+  // turn(70, false, 35);
   // drive_forward(32, 50, 1);
-  // turn(70, true);
+  // turn(70, true, 35);
   // drive_forward(10, 50, 1);
 
   // BackIntake.spin(fwd, 100, percent);
@@ -158,68 +158,58 @@ void autonomous(void) {
   // LoneIntake.stop(brake);
 
   // drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
-  // turn(70, true);
+  // turn(70, true, 35);
   // drive_forward(13, 50, 1);
-  // turn(70, false);
+  // turn(70, false, 35);
   // drive_forward(30, 50, 1);
   // Descore.set(true);
 
 
 
   //Left Side V2
-  BackIntake.spin(reverse, 100, percent); 
-  FrontIntake.spin(fwd, 100, percent);
-  drive_forward(5, 100, 1);
-  wait(0.25, sec);
-  turn(67, true);
-  drive_forward(26, 50, 1);
-  wait(0.5, sec);
-  turn(19, true);
-  drive_forward(12, 50, 1);
-  BackIntake.spin(fwd, 75, percent);
-  FrontIntake.spin(fwd, 75, percent);
-  LoneIntake.spin(fwd, 75, percent);
-  wait (1.5, sec);
-  BackIntake.stop(brake);
-  FrontIntake.stop(brake);
-  LoneIntake.stop(brake);
+  // BackIntake.spin(reverse, 100, percent); 
+  // FrontIntake.spin(fwd, 100, percent);
+  // drive_forward(5, 100, 1);
+  // wait(0.25, sec);
+  // turn(67, true, 35);
+  // drive_forward(26, 50, 1);
+  // wait(0.5, sec);
+  // turn(19, true, 35);
+  // drive_forward(12, 50, 1);
+  // BackIntake.spin(fwd, 100, percent);
+  // FrontIntake.spin(fwd, 100, percent);
+  // LoneIntake.spin(fwd, 100, percent);
+  // wait(1.25, sec);
+  // BackIntake.stop(brake);
+  // FrontIntake.stop(brake);
+  // LoneIntake.stop(brake);
 
-  drive_forward(45, 90, -1);
-  wait(0.25, sec);
-  turn(21, false);
-  drive_forward(19, 50, 1);
-  BackIntake.spin(fwd, 100, percent);
-  FrontIntake.spin(fwd, 100, percent);
-  LoneIntake.spin(fwd, 100, percent);
-  wait(1.5, sec);
-  BackIntake.stop(brake);
-  FrontIntake.stop(brake);
-  LoneIntake.stop(brake);
+  // drive_forward(46, 90, -1);
+  // wait(0.25, sec);
+  // turn(23, false, 35);
+  // drive_forward(19, 50, 1);
+  // BackIntake.spin(fwd, 100, percent);
+  // FrontIntake.spin(fwd, 100, percent);
+  // LoneIntake.spin(fwd, 100, percent);
+  // wait(1.5, sec);
+  // BackIntake.stop(brake);
+  // FrontIntake.stop(brake);
+  // LoneIntake.stop(brake);
 
-  drive_forward(10, 100, -1);
-  turn(145, true);
-  BackIntake.spin(reverse, 100, percent); 
-  FrontIntake.spin(fwd, 100, percent);
-  LoneIntake.spin(fwd, 100, percent);
-  MatchLoader.set(true);
-  wait (0.75, sec);
-  drive_forward(25, 75, 1);
-  wait(0.75, sec);
-  drive_forward(15, 100, -1);
-  MatchLoader.set(false);
-  BackIntake.stop(brake);
-  FrontIntake.stop(brake);
-  LoneIntake.stop(brake);
-
-  turn (145, false);
-  drive_forward(10, 100, 1);
-  BackIntake.spin(fwd, 100, percent);
-  FrontIntake.spin(fwd, 100, percent);
-  LoneIntake.spin(fwd, 100, percent);
-  wait(3, sec);
-  BackIntake.stop(brake);
-  FrontIntake.stop(brake);
-  LoneIntake.stop(brake);
+  // drive_forward(10, 100, -1);
+  // turn(145, true, 25);
+  // BackIntake.spin(reverse, 100, percent); 
+  // FrontIntake.spin(fwd, 100, percent);
+  // LoneIntake.spin(fwd, 100, percent);
+  // MatchLoader.set(true);
+  // wait(0.75, sec);
+  // drive_forward(27, 50, 1);
+  // wait(2, sec);
+  // drive_forward(15, 100, -1);
+  // MatchLoader.set(false);
+  // BackIntake.stop(brake);
+  // FrontIntake.stop(brake);
+  // LoneIntake.stop(brake);
 
 // Right Side (SLOT 2)
 
@@ -227,9 +217,9 @@ void autonomous(void) {
 //   wait(2, sec); // give time to calibrate
 
 //   drive_forward(20, 50, 1); // Move forward 20 inches at 50% speed
-//   turn(70, true);
+//   turn(70, true, 35);
 //   drive_forward(32, 50, 1);
-//   turn(70, false);
+//   turn(70, false, 35);
 //   drive_forward(10, 50, 1);
 
 //   BackIntake.spin(fwd, 100, percent);
@@ -241,9 +231,9 @@ void autonomous(void) {
 //   LoneIntake.stop(brake);
 
 //   drive_forward(5, 50, -1); // Move backward 5 inches at 50% speed
-//   turn(70, true);
+//   turn(70, true, 35);
 //   drive_forward(12, 50, 1);
-//   turn(70, false);
+//   turn(70, false, 35);
 //   drive_forward(29, 50, 1);
 //   Descore.set(true);
 
@@ -253,12 +243,22 @@ void autonomous(void) {
 
 // NOTE: 70 degrees = ~90 degrees turn, 15 degrees = ~45 degrees turn
 
-// BackIntake.spin(reverse, 100, percent);
-// FrontIntake.spin(fwd, 100, percent);
-// drive_forward(18, 100, 1); // Move forward 18 inches at 100% speed
-// BackIntake.stop(brake);
-// FrontIntake.stop(brake);
+BackIntake.spin(reverse, 100, percent);
+FrontIntake.spin(fwd, 100, percent);
+drive_forward(30, 100, 1); // Move forward 18 inches at 100% speed
+BackIntake.stop(brake);
+FrontIntake.stop(brake);
+wait(0.25, sec);
+turn(70, true, 35);
+drive_forward(10, 75, 1);
+wait(0.25, sec);
+turn(70, false, 35);
+drive_forward(10, 75, 1);
 
+wait(0.25, sec);
+turn(70, false, 35);
+drive_forward(10, 75, 1);
+wait(3, sec);
 
 
 
