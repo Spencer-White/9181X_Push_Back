@@ -257,10 +257,34 @@ drive_forward(10, 75, 1);
 
 wait(0.25, sec);
 turn(70, false, 35);
+MatchLoader.set(true);
+wait(0.75, sec);
 drive_forward(10, 75, 1);
 wait(3, sec);
+drive_forward(10, 75, -1);
+MatchLoader.set(false);
 
+wait(0.25, sec);
+turn(70, false);
+drive_forward(60, 75, 1);
+wait(0.25, sec);
+turn(70, true);
+MatchLoader.set(true);
+wait(0.75, sec);
+drive_forward(10, 75, 1);
+wait(3, sec);
+drive_forward(10, 75, -1);
+MatchLoader.set(false);
 
+wait(0.25, sec);
+turn(70, true);
+drive_forward(10, 75, 1);
+wait(0.25, sec);
+turn(70, false);
+drive_forward(10, 75, 1);
+wait(0.25, sec);
+turn (70, true);
+drive_forward(20, 100, 1);
 
 /*
 imu.calibrate();
